@@ -6,6 +6,11 @@ use App\Models\Admin;
 use App\Models\Services\AdminService;
 use Illuminate\Http\Request;
 
+# 引入邮件类
+use Illuminate\Mail\Mailer;
+use Mail;
+use Illuminate\Mail\Message;
+
 class AdminController extends BaseController
 {
     // 列表
@@ -45,6 +50,26 @@ class AdminController extends BaseController
         // 验证通过添加数据表中
         $model = Admin::create($data);
 
+        // 发送文本邮件通知
+        /*Mail::raw('添加用户成功',function(Message $message){
+            // 主题
+            $message->subject('添加用户通知');
+            // 发给谁
+            $message->to('1973185697@qq.com','俊杰');
+        });*/
+
+        // 发送html邮件
+        // 参1 指定发送邮件的模板
+        // 参2 给模型分配的数据
+        // 参3 回调方法
+        Mail::send('admin.mailer.adduser', compact('model'), function (Message $message) use ($model) {
+            // 主题
+            $message->subject('添加用户通知');
+            // 发给谁
+            #$message->to('1658996694@qq.com', '小张');
+            $message->to($model->email, $model->truename);
+        });
+
         return redirect(route('admin.user.index'))->with('success', '添加用户【' . $model->truename . '】成功');
     }
 
@@ -76,5 +101,29 @@ class AdminController extends BaseController
         // 修改
         Admin::where('id', $id)->update($data);
         return redirect(route('admin.user.index'))->with('success', '修改用户【' . $data['truename'] . '】成功');
+    }
+
+    // 删除用户
+    public function destroy(int $id)
+    {
+        $res = Admin::destroy($id);
+        return ['status' => 0, 'msg' => '删除成功'];
+    }
+
+    // 全选删除
+    public function delall(Request $request)
+    {
+        $ids = $request->get('ids');
+        Admin::destroy($ids);
+        return ['status' => 0, 'msg' => '删除成功'];
+    }
+
+    // 恢复用户
+    public function restore(Request $request)
+    {
+        $id = $request->get('id');
+        // 查找到此用户
+        Admin::where('id', $id)->onlyTrashed()->restore();
+        return ['status' => 0, 'msg' => '恢复成功'];
     }
 }

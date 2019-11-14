@@ -4,9 +4,17 @@ namespace App\Models;
 
 // 此类提供auth验证方法
 use Illuminate\Foundation\Auth\User as Authenticatable;
+// 软删除  导入类文件
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Authenticatable
 {
+    // 继承  trait
+    use SoftDeletes;
+    // 指定软删除字段  deleted_at 数据表中的字段
+    protected $dates = ['deleted_at'];
+
+
     // 黑名单
     protected $guarded = [];
 

@@ -35,6 +35,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // 修改用户处理
         Route::put('user/edit/{id}','AdminController@update')->name('user.update');
 
+        // 删除用户
+        Route::delete('user/destroy/{id}','AdminController@destroy')->name('user.destroy');
+        // 全选删除
+        Route::delete('user/delall','AdminController@delall')->name('user.delall');
+
+        // 恢复
+        Route::get('user/restore','AdminController@restore')->name('user.restore');
+
     });
 
 

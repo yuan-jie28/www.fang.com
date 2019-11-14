@@ -4,7 +4,7 @@
     <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> 首页
         <span class="c-gray en">&gt;</span> 用户中心
-        <span class="c-gray en">&gt;</span> 添加用户
+        <span class="c-gray en">&gt;</span> 修改用户
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
            href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
@@ -31,13 +31,13 @@
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-                <div class="formControls col-xs-8 col-sm-9">
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
-                        <input type="radio" name="sex" value="先生" @if($data->sex=='先生') checked @endif>
+                        <input name="sex" type="radio" value="先生" checked>
                         <label for="sex-1">先生</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" name="sex" value="女士" @if($data->sex=='女士') checked @endif>
+                        <input type="radio" value="女士" name="sex">
                         <label for="sex-2">女士</label>
                     </div>
                 </div>

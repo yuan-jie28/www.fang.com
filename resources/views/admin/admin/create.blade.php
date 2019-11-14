@@ -30,13 +30,13 @@
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
-                <div class="formControls col-xs-8 col-sm-9">
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
-                        <input type="radio" name="sex" value="先生" checked>
+                        <input name="sex" type="radio" value="先生" checked>
                         <label for="sex-1">先生</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" name="sex" value="女士">
+                        <input type="radio" value="女士" name="sex">
                         <label for="sex-2">女士</label>
                     </div>
                 </div>
@@ -81,4 +81,5 @@
             increaseArea: '20%'
         });
     </script>
+
 @endsection

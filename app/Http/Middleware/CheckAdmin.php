@@ -20,7 +20,7 @@ class CheckAdmin
         // echo '<h3>我是中间件</h3>';
 
         if (!auth()->check()) {
-            // 用户没有登录才能跳转到登录页面
+            // 用户没有登录则直接跳转到登录页面
             return redirect(route('admin.login'))->withErrors(['errors' => '请您先登录']);
         }
 
