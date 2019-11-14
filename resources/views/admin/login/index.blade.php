@@ -54,28 +54,13 @@
             </div>
         </form>
 
-        {{-- 显示表单验证错误信息--}}
-        @if($errors->any())
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        @endif
+        {{-- 表单验证提示  blade模板包含，把共用的html提取到外部，方便日后共用 --}}
+        @include('admin.public.msg')
 
     </div>
 </div>
 <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
-<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="static/h-ui/js/H-ui.min.js"></script>
-<!--此乃百度统计代码，请自行删除-->
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-<!--/此乃百度统计代码，请自行删除
+<script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ staticAdminWeb() }}static/h-ui/js/H-ui.min.js"></script>
 </body>
 </html>

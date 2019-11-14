@@ -19,6 +19,10 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+
+        // 这是全局中间件的定义方法
+        // 后台用户是否登录检查
+        // \App\Http\Middleware\CheckAdmin::class,
     ];
 
     /**
@@ -47,7 +51,7 @@ class Kernel extends HttpKernel
      * The application's route middleware.
      *
      * These middleware may be assigned to groups or used individually.
-     *
+     * 路由中间件
      * @var array
      */
     protected $routeMiddleware = [
@@ -60,6 +64,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // 路由中间件的别名  => 类路径
+        'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
     ];
 
     /**
