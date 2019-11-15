@@ -26,4 +26,12 @@ class Admin extends Authenticatable
         // 给密码字段加密
         $this->attributes['password'] = bcrypt($value);
     }
+
+    // 用户与角色之间的关系为  属于
+    public function role()
+    {
+        // 参1  关联模型
+        // 参2  本模型对应关联模型的对应字段ID
+        return $this->belongsTo(Role::class,'role_id');
+    }
 }

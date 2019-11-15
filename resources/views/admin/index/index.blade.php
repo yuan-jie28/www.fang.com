@@ -29,9 +29,9 @@
             </nav>
             <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
                 <ul class="cl">
-                    <li>超级管理员</li>
+                    <li>{{ auth()->user()->truename }}</li>
                     <li class="dropDown dropDown_hover">
-                        <a href="#" class="dropDown_A">admin <i class="Hui-iconfont">&#xe6d5;</i></a>
+                        <a href="#" class="dropDown_A">{{ auth()->user()->username }} <i class="Hui-iconfont">&#xe6d5;</i></a>
                         <ul class="dropDown-menu menu radius box-shadow">
                             <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
                             <li><a href="#">切换账户</a></li>
@@ -56,16 +56,18 @@
 </header>
 <aside class="Hui-aside">
     <div class="menu_dropdown bk_2">
+        @foreach($menuData as $item)
         <dl id="menu-admin">
-            <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dt><i class="Hui-iconfont">&#xe62d;</i> {{ $item['name'] }}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>
                 <ul>
-                    <li><a data-href="{{ route('admin.user.index') }}" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
-                    <li><a data-href="admin-list.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-                    <li><a data-href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+                    @foreach($item['sub'] as $val)
+                    <li><a data-href="{{ route($val['route_name']) }}" data-title="{{ $val['name'] }}" href="javascript:void(0)">{{ $val['name'] }}</a></li>
+                    @endforeach
                 </ul>
             </dd>
         </dl>
+        @endforeach
     </div>
 </aside>
 <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
@@ -106,48 +108,17 @@
 <script type="text/javascript">
     /*个人信息*/
     function myselfinfo(){
-        layer.open({
-            type: 1,
-            area: ['300px','200px'],
-            fix: false, //不固定
-            maxmin: true,
-            shade:0.4,
-            title: '查看信息',
-            content: '<div>管理员信息</div>'
-        });
+        /*
+            参数解释：
+            title   标题
+            url     请求的url
+            id      需要操作的数据id
+            w       弹出层宽度（缺省调默认值）
+            h       弹出层高度（缺省调默认值）
+         */
+        layer_show('修改用户','{{ route('admin.user.edit',auth()->user()->id)}}', 800 , 600);
     }
 
-    /*资讯-添加*/
-    function article_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*图片-添加*/
-    function picture_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*产品-添加*/
-    function product_add(title,url){
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*用户-添加*/
-    function member_add(title,url,w,h){
-        layer_show(title,url,w,h);
-    }
 
 
 </script>

@@ -43,6 +43,17 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // 恢复
         Route::get('user/restore','AdminController@restore')->name('user.restore');
 
+        //--------------------------------------------------------------
+        // 角色管理
+        // 角色列表
+        // 单个的定义路由，太麻烦，laravel提供资源路由，定义一个提供7种路由，满足了我们的增删改查
+        // 定义资源路由
+        Route::resource('role','RoleController');
+
+        //----------------------------------------
+        // 权限管理
+        Route::resource('node','NodeController');
+
     });
 
 

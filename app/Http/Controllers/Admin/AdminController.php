@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
+use App\Models\Role;
 use App\Models\Services\AdminService;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class AdminController extends BaseController
     // 添加显示
     public function create()
     {
-        return view('admin.admin.create');
+        // 在添加用户显示读取所有的角色列表信息
+        $roleData = Role::pluck('name','id');
+        return view('admin.admin.create',compact('roleData'));
     }
 
     // 添加处理
@@ -42,6 +45,9 @@ class AdminController extends BaseController
             // confirmed 验证两个表单项是否数据一致
             // 如果验证字段名为password，则需要和此字段中的数据一致的字段，名称一定要叫password_confirmation
             'password' => 'required|confirmed',
+            'role_id' => 'required'
+        ],[
+            'role_id.required' => '角色必须要选择其中之一'
         ]);
         // 获取数据
         $data = $request->except(['_token', 'password_confirmation']);
