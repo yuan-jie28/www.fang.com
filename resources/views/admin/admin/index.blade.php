@@ -75,10 +75,16 @@
                         <td class="td-manage">
                             {{--  <a href="{{ route('admin.user.edit',['id' => $item->id]) }}" class="btn btn-secondary-outline radius">修改</a>--}}
                             {{-- 简写 --}}
-                            <a href="{{ route('admin.user.edit',$item) }}"
-                               class="btn btn-secondary-outline radius">修改</a>
-                            <a data-href="{{ route('admin.user.destroy',$item) }}"
-                               class="btn btn-danger-outline radius deluser">删除</a>
+{{--                            <a href="{{ route('admin.user.edit',$item) }}"--}}
+{{--                               class="btn btn-secondary-outline radius">修改</a>--}}
+{{--                            <a data-href="{{ route('admin.user.destroy',$item) }}"--}}
+{{--                               class="btn btn-danger-outline radius deluser">删除</a>--}}
+                            {{--
+                                   {!!  !!}中间的内容不会被实例转义
+                                   @{{  }} 不会被blade解析的  一般用于和vue前端框架混合时使用
+                            --}}
+                            {!! $item->editBtn('admin.user.edit') !!}
+                            {!! $item->delBtn('admin.user.destroy') !!}
                         </td>
                     </tr>
                 @endforeach

@@ -48,6 +48,13 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'article'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/articles'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

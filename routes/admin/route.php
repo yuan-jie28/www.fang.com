@@ -54,6 +54,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // 权限管理
         Route::resource('node','NodeController');
 
+        //----------------------------------------------------------
+        // 路由规则定义 越精确越靠前，越模糊越向后
+        // 文件上传   admin/article/upfile  admin/article/{article}
+        Route::post('article/upfile','ArticleController@upfile')->name('article.upfile');
+        // 文章管理
+        Route::resource('article','ArticleController');
+
+
     });
 
 

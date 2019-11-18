@@ -49,11 +49,19 @@ class CheckAdmin
         ];
         $authList = array_merge($authList,$allowList);
 
+        // 也可以写到session中
+        # session(['auths' => $authList]);
+        // 把权限写到request对象中
+        $request->auths = $authList;
+
         // 获取当前路由的别名
         $currentRouteName = $request->route()->getName();
 
         // 获取当前用户名
         $currentUserName = auth()->user()->username;
+
+        // 保存当前用户名
+        $request->username = $currentUserName;
 
         // 权限判断
         if(!in_array($currentRouteName,$authList) && $currentUserName != 'admin'){

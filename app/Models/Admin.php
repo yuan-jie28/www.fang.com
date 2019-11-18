@@ -7,10 +7,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 // 软删除  导入类文件
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// 引入按钮组train
+use App\Models\Traits\Btn;
+
 class Admin extends Authenticatable
 {
-    // 继承  trait
-    use SoftDeletes;
+    // 多继承  trait 和 按钮组
+    use SoftDeletes,Btn;
     // 指定软删除字段  deleted_at 数据表中的字段
     protected $dates = ['deleted_at'];
 
