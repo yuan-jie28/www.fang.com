@@ -50,10 +50,13 @@
                         <td class="td-manage">
                             {{--  <a href="{{ route('admin.user.edit',['id' => $item->id]) }}" class="btn btn-secondary-outline radius">修改</a>--}}
                             {{-- 简写 --}}
-                            <a href="{{ route('admin.role.edit',$item) }}"
-                               class="btn btn-secondary-outline radius">修改</a>
-                            <a data-href="#"
-                               class="btn btn-danger-outline radius deluser">删除</a>
+{{--                            <a href="{{ route('admin.role.edit',$item) }}"--}}
+{{--                               class="btn btn-secondary-outline radius">修改</a>--}}
+{{--                            <a data-href="#"--}}
+{{--                               class="btn btn-danger-outline radius deluser">删除</a>--}}
+                            {{-- 上面的原始显示修改与删除   下面是引入封装btn修改与删除 --}}
+                            {!! $item->editBtn('admin.role.edit') !!}
+                            {!! $item->delBtn('admin.role.destroy') !!}
                         </td>
                     </tr>
                 @endforeach

@@ -18,7 +18,21 @@ trait Btn {
     // 修改
     public function editBtn(string $routeName) {
         if ($this->checkAuth($routeName)) {
-            return '<a href="' . route($routeName, $this) . '" class="label label-secondary radius">修改</a>';
+            $arr['start'] = request()->get('start') ?? 0;
+            // 字段在表格的索引
+            $arr['field'] = request()->get('order')[0]['column'];
+            // 排序类型
+            $arr['order'] = request()->get('order')[0]['dir'];
+            $params = http_build_query($arr);
+
+            // 生成url地址
+            $url = route($routeName,$this);
+            if (stristr($url, '?' )) {
+                $url = $url . '&' . $params;
+            } else{
+                $url = $url . '?' . $params;
+            }
+            return '<a href="' . $url . '" class="btn btn-secondary-outline radius">修改</a>';
         }
         return '';
     }
@@ -26,7 +40,7 @@ trait Btn {
     // 删除
     public function delBtn(string $routeName) {
         if ($this->checkAuth($routeName)) {
-            return '<a href="' . route($routeName, $this) . '" class="label label-danger radius deluser">删除</a>';
+            return '<a href="' . route($routeName, $this) . '" class="btn btn-danger-outline radius deluser">删除</a>';
         }
         return '';
     }

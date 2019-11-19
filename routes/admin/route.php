@@ -58,6 +58,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // 路由规则定义 越精确越靠前，越模糊越向后
         // 文件上传   admin/article/upfile  admin/article/{article}
         Route::post('article/upfile','ArticleController@upfile')->name('article.upfile');
+        // 文章的封面图片删除
+        Route::get('article/delfile','ArticleController@delfile')->name('article.delfile');
         // 文章管理
         Route::resource('article','ArticleController');
 

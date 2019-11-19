@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         // 生成后台用户数据
         //$this->call(AdminSeeder::class);
 
-        $this->call(CateSeeder::class);
+        // $this->call(CateSeeder::class);
+
+        // 文章
+        $this->call(ArticleSeeder::class);
     }
 }
