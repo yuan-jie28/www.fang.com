@@ -48,11 +48,28 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'article'   => [
+        // 文件上传的节点
+        'articles'   => [
             // 驱动  本地文件
             'driver'    => 'local',
             // 上传到服务器的位置
             'root'      => public_path('uploads/articles'),
+        ],
+
+        // 房源属性节点
+        'fangattr'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/fangattr'),
+        ],
+
+        // 房东节点
+        'fangowner'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/fangowner'),
         ],
 
         'public' => [

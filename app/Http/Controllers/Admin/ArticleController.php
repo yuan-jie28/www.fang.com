@@ -10,10 +10,11 @@ use App\Http\Requests\ArticleAddRequest;
 class ArticleController extends BaseController
 {
     // 文章列表
-    public function index(Request $request)
-    {
+     public function index(Request $request) {
+
         // 判端是否是Ajax请求
         if ($request->ajax()) {
+
             // 服务器端分页
             // 分页
             // 起始位置
@@ -63,7 +64,7 @@ class ArticleController extends BaseController
 
 
         return view('admin.article.index');
-    }
+     }
 
     // 添加文章显示
     public function create()
@@ -73,22 +74,6 @@ class ArticleController extends BaseController
         $cateData = treeLevel($cateData);
 
         return view('admin.article.create', compact('cateData'));
-    }
-
-    // 文件上传
-    public function upfile(Request $request)
-    {
-        
-//        return ['status' => 0];
-        // 获取上传表单文件域名称对应的对象
-        $file = $request->file('file');
-        // 上传
-        // 参1   在节点名称指定的目录下面创建一个新的以此名称的目录，可以不写为空，不创建
-        // 参2   在config中filesystems.php文件中配置的节点名称
-        // 返回上传成功的相对路径
-        $url = $file->store('', 'article');
-
-        return ['status' => 0, 'url' => '/uploads/articles/' . $url];
     }
 
     // 删除图片

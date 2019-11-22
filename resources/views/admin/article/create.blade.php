@@ -103,7 +103,7 @@
             // swf文件路径
             swf: '{{ staticAdminWeb() }}lib/webuploader/0.1.5/Uploader.swf',
             {{--// 文件接收服务端   路由存在，上传图片处理  {{ route('admin.article.upfile') }}--}}
-            server: '{{ route('admin.article.upfile') }}',
+            server: '{{ route('admin.base.upfile') }}',
             // 选择文件的按钮     此按钮必须和HTML中的按钮ID名称一致
             pick: '#filePicker',
             // 不压缩image，默认如果是jpeg，文件上传前会压缩一下再上传

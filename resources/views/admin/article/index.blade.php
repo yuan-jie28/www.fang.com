@@ -66,7 +66,7 @@
                 {targets: [4], orderable: false}
             ],
             // 初始化排序
-            order: [[{{ request()->get('field') ?? 0 }},'{{ request()->get("order") ?? "desc"}}']],
+            order: [[{{ request()->get('field') ?? 0 }}, '{{ request()->get("order") ?? "desc"}}']],
             // 从第几条数据开启显示
             displayStart: {{ request()->get('start') ?? 0 }},
             // 取消默认搜索  客户端分页可以保留
@@ -116,33 +116,38 @@
 
         // 删除文章
         // 事件委托
-        $('.table-sort').on('click', '.deluser',function(){
+        $('.table-sort').on('click', '.deluser', function () {
             // 请求地址
             let url = $(this).attr('href');
-            // 使用fetch来实现异步ajax  默认返回promise
-            fetch(url,{
-                // 指定请求的类型
-                method: 'delete',
-                // 指定header
-                headers:{
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // json字符串传递数据，需要此头信息
-                    'content-type': 'application/json'
-                },
-                // 数据
-                body: JSON.stringify({name: 1})
-            }).then(res => {
-                return res.json();
-            }).then(ret => {
-                layer.msg('删除成功',{icon: 1, time: 1000}, () => {
-                    $(this).parents('tr').remove();
-                })
+            layer.confirm('您真的要删除此用户吗？', {
+                btn: ['确认删除', '再想一下']
+            }, () => {
+                // 使用fetch来实现异步ajax  默认返回promise
+                fetch(url, {
+                    // 指定请求的类型
+                    method: 'delete',
+                    // 指定header
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        // json字符串传递数据，需要此头信息
+                        'content-type': 'application/json'
+                    },
+                    // 数据
+                    body: JSON.stringify({name: 1})
+                }).then(res => {
+                    return res.json();
+                }).then(ret => {
+                    layer.msg('删除成功', {icon: 1, time: 1000}, () => {
+                        $(this).parents('tr').remove();
+                    })
+                });
             });
+
 
             return false;
         });
 
-        const _token = "{{ csrf_token() }}";
+        /*const _token = "{{ csrf_token() }}";
         // 此时第一次使用回调函数时，不能使用箭头函数，因为会破坏this的指向，laravel框架已经自动添加了this指向
         $('.deluser').click(function () {
             // 发起请求的地址
@@ -171,7 +176,7 @@
             });
             // jquery中取消默认行为
             return false;
-        });
+        });*/
 
         // 全选删除
         function deleteAll() {

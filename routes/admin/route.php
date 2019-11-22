@@ -5,8 +5,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('login', 'LoginController@index')->name('login');
     // 后台登录处理
     Route::post('login', 'LoginController@login')->name('login');
-
-
     //------------------------------------------------
     // 这是路由中间件的第3种方法，在路由分组中统一绑定一个中间件
     Route::group(['middleware' => ['checkadmin']], function () {
@@ -19,6 +17,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // Route::get('welcome','IndexController@welcome')->name('welcome')->middleware('checkadmin');
         // 退出登录
         Route::get('logout', 'IndexController@logout')->name('logout');
+
+        //-------------------------------------------------
+        // 文件上传
+        Route::post('base/upfile','BaseController@upfile')->name('base.upfile');
 
         //------------------------------------------------
         // 用户管理
@@ -57,13 +59,21 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         //----------------------------------------------------------
         // 路由规则定义 越精确越靠前，越模糊越向后
         // 文件上传   admin/article/upfile  admin/article/{article}
-        Route::post('article/upfile','ArticleController@upfile')->name('article.upfile');
+        // Route::post('article/upfile','ArticleController@upfile')->name('article.upfile');
         // 文章的封面图片删除
         Route::get('article/delfile','ArticleController@delfile')->name('article.delfile');
         // 文章管理
         Route::resource('article','ArticleController');
 
+        //------------------------------------------------------------
+        // 属性的封面图片删除
+        Route::get('fangattr/delfile','ArticleController@delfile')->name('fangattr.delfile');
+        // 房源属性
+        Route::resource('fangattr','FangAttrController');
 
+        //-------------------------------------------------
+        // 房东管理
+        Route::resource('fangowner','FangOwnerController');
     });
 
 
