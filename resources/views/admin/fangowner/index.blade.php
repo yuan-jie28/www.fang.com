@@ -1,17 +1,17 @@
 @extends('admin.public.main')
 @section('css')
     <style>
-        #juzhong td{
+        #juzhong td {
             /*居中*/
-            text-align:center;
+            text-align: center;
         }
     </style>
 @endsection
 @section('cnt')
     <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> 首页
-        <span class="c-gray en">&gt;</span> 房源属性
-        <span class="c-gray en">&gt;</span> 房源属性列表
+        <span class="c-gray en">&gt;</span> 房东管理
+        <span class="c-gray en">&gt;</span> 房东列表
         <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
            href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
     </nav>
@@ -35,8 +35,11 @@
 
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                <a href="{{ route('admin.fangattr.create') }}" class="btn btn-primary radius">
-                    <i class="Hui-iconfont">&#xe600;</i> 添加房源属性
+                <a href="{{ route('admin.fangowner.create') }}" class="btn btn-primary radius">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加房东
+                </a>
+                <a href="{{ route('admin.fangowner.export') }}" class="btn btn-success radius">
+                    <i class="Hui-iconfont">&#xe600;</i> 导出房东excel
                 </a>
             </span>
         </div>
@@ -44,83 +47,68 @@
             <table class="table table-border table-bordered table-hover table-bg table-sort">
                 <thead>
                 <tr class="text-c">
-                    <th width="80">ID</th>
-                    <th width="100">属性名称</th>
-                    <th width="40">图标</th>
-                    <th width="100">操作</th>
+                    <th width="40">ID</th>
+                    <th width="80">房东姓名</th>
+                    <th width="40">房东性别</th>
+                    <th width="40">房东年龄</th>
+                    <th width="80">手机号码</th>
+                    <th width="100">身份证号</th>
+                    <th width="160">家庭住址</th>
+                    <th width="100">邮箱</th>
+                    <th width="160">操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                {{-- 列表数据 --}}
-                <tr v-for="item in items" id="juzhong">
-                    <td v-text="item.id"></td>
-                    <td :style="'padding-left:'+(item.level*20)+'px'">@{{ item.name }}@{{ item.level }}</td>
-                    <td>
-                        <img :src="item.icon" style="width: 100px;">
-                    </td>
-                    <td v-html="item.actionBtn"></td>
-                </tr>
+                @foreach($data as $item)
+                    <tr id="juzhong">
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->sex }}</td>
+                        <td>{{ $item->age }}</td>
+                        <td>{{ $item->phone }}</td>
+                        <td>{{ $item->card }}</td>
+                        <td>{{ $item->address }}</td>
+                        <td>{{ $item->email }}</td>
+                        <td>
+                            {!! $item->showBtn('admin.fangowner.show') !!}
+                            {!! $item->editBtn('admin.fangowner.edit') !!}
+                            {!! $item->delBtn('admin.fangowner.destroy') !!}
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
+        {{-- 分页 --}}
+        {{ $data->appends(request()->except('page'))->links() }}
     </div>
 @endsection
 
 @section('js')
     <script type="text/javascript" src="{{ staticAdminWeb() }}lib/My97DatePicker/4.8/WdatePicker.js"></script>
     <script type="text/javascript" src="{{ staticAdminWeb() }}lib/laypage/1.2/laypage.js"></script>
-    <script type="text/javascript" src="/js/vue.js"></script>
     <script>
         const _token = "{{ csrf_token() }}";
-        const app = new Vue({
-            el: '#app',
-            data: {
-                // 房源列表
-                items: []
-            },
-            mounted() {
-                $.get("{{ route('admin.fangattr.index') }}").then(ret => {
-                    // 数据代理  Object.defineProperty(obj,{set,get})
-                    this.items = ret;
-                })
-            }
-        })
-        $('.table-sort').on('click', '.deluser', function () {
-            return false;
-        })
-
-        // 删除文章
-        // 事件委托
-        $('.table-sort').on('click', '.deluser', function () {
-            // 请求地址
+        // 给查看按钮绑定点击事件并取消按钮的默认行为
+        $('.showBtn').click(function () {
             let url = $(this).attr('href');
-            layer.confirm('您真的要删除此用户吗？', {
-                btn: ['确认删除', '再想一下']
-            }, () => {
-                // 使用fetch来实现异步ajax  默认返回promise
-                fetch(url, {
-                    // 指定请求的类型
-                    method: 'delete',
-                    // 指定header
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        // json字符串传递数据，需要此头信息
-                        'content-type': 'application/json'
-                    },
-                    // 数据
-                    body: JSON.stringify({name: 1})
-                }).then(res => {
-                    return res.json();
-                }).then(ret => {
-                    layer.msg('删除成功', {icon: 1, time: 1000}, () => {
-                        $(this).parents('tr').remove();
-                    })
-                });
+            // 弹框查看身份证信息
+            $.get(url).then(({status, msg, data}) => {
+                if (status == 0) {
+                    let content = '';
+                    data.forEach(item => {
+                        content += `<img src="${item}" style="width: 150px;" />&nbsp;`;
+                    });
+                    // 弹框
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', // 加上边框
+                        area: ['600px', '300px'],  // 宽高
+                        content
+                    });
+                }
             });
-
-
             return false;
-        });
+        })
     </script>
 @endsection

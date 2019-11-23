@@ -1,4 +1,5 @@
 @extends('admin.public.main')
+
 @section('css')
     <style>
         #juzhong td{
@@ -7,6 +8,7 @@
         }
     </style>
 @endsection
+
 @section('cnt')
     <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -54,7 +56,7 @@
                 {{-- 列表数据 --}}
                 <tr v-for="item in items" id="juzhong">
                     <td v-text="item.id"></td>
-                    <td :style="'padding-left:'+(item.level*20)+'px'">@{{ item.name }}@{{ item.level }}</td>
+                    <td :style="'padding-left:'+(item.level*20)+'px'">@{{ item.name }}</td>
                     <td>
                         <img :src="item.icon" style="width: 100px;">
                     </td>

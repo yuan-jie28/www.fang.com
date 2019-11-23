@@ -73,7 +73,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
         //-------------------------------------------------
         // 房东管理
+        Route::get('fangowner/export','FangOwnerController@export')->name('fangowner.export');
         Route::resource('fangowner','FangOwnerController');
+
+        //---------------------------------------------------
+        // 城市获取
+        Route::get('fang/city','FangController@getCity')->name('fang.city');
+        // 房源管理
+        Route::resource('fang','FangController');
     });
 
 

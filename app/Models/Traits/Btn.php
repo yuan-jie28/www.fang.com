@@ -45,4 +45,12 @@ trait Btn {
         return '';
     }
 
+    // 查看 根据ID来显示的按钮
+    public function showBtn(string $routeName) {
+        if ($this->checkAuth($routeName)) {
+            return '<a href="' . route($routeName, $this) . '" class="btn btn-success-outline radius showBtn">查看</a>';
+        }
+        return '';
+    }
+
 }

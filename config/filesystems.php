@@ -72,6 +72,22 @@ return [
             'root'      => public_path('uploads/fangowner'),
         ],
 
+        // 房源节点
+        'fang'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/fang'),
+        ],
+
+        // 导出房东excel
+        'fangownerexcel'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/fangownerexcel'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
