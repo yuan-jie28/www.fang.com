@@ -1,5 +1,14 @@
 @extends('admin.public.main')
 
+@section('css')
+    <style>
+        #juzhong td {
+            /*居中*/
+            text-align: center;
+        }
+    </style>
+@endsection
+
 @section('cnt')
     <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -30,7 +39,7 @@
                     <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
                 </a>
                 <a href="{{ route('admin.fang.create') }}" class="btn btn-primary radius">
-                    <i class="Hui-iconfont">&#xe600;</i> 添加文章
+                    <i class="Hui-iconfont">&#xe600;</i> 添加房源
                 </a>
             </span>
         </div>
@@ -38,57 +47,27 @@
             <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                 <thead>
                 <tr class="text-c">
-                    <th width="20">ID</th>
-                    <th width="800">房源名称</th>
-                    <th width="800">小区地址</th>
-                    <th width="80">房源地址</th>
-                    <th width="20">房源朝向</th>
-                    <th width="20">房源面积</th>
-                    <th width="20">使用面积</th>
-                    <th width="20">建筑年代</th>
-                    <th width="20">楼层</th>
-                    <th width="20">几室</th>
-                    <th width="20">几厅</th>
-                    <th width="20">几卫</th>
-                    <th width="20">付款方式</th>
-                    <th width="40">房源区域</th>
-                    <th width="20">租期方式</th>
-                    <th width="40">小区地址</th>
-                    <th width="20">租赁方式</th>
-                    <th width="20">房源业主</th>
-                    <th width="20">经度</th>
-                    <th width="20">纬度</th>
+                    <th width="40">ID</th>
+                    <th width="70">房源名称</th>
+                    <th width="70">小区地址</th>
+                    <th width="100">房源地址</th>
+                    <th width="40">房源业主</th>
+                    <th width="220">配套设施</th>
                     <th width="40">是否推荐</th>
                     <th width="40">房源状态</th>
-                    <th width="100">配套设施</th>
-                    <th width="120">操作</th>
+                    <th width="140">操作</th>
                 </tr>
                 </thead>
                 @foreach($data as $item)
-                    <tr>
+                    <tr id="juzhong">
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->fang_name }}</td>
                         <td>{{ $item->fang_xiaoqu }}</td>
                         <td>{{ $item->fang_addr }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_direction) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_build_area) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_using_area) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_year) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_floor) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_shi) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_ting) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_wei) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_rent_money) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_area) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_rent_type) }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_rent_class) }}</td>
                         <td>{{ $item->fangowner->name }}</td>
-                        <td>{{ $item->getAttrIdByName($item->fang_rent) }}</td>
-                        <td>{{ $item->longitude }}</td>
-                        <td>{{ $item->latitude }}</td>
+                        <td>{{ $item->getAttrIdByName(explode(',',$item->fang_config)) }}</td>
                         <td>{{ $item->is_recommend == '0' ? '否' : '是'}}</td>
                         <td>{{ $item->fang_status == '0' ? '待租' : '已租'}}</td>
-                        <td>{{ $item->getAttrIdByName(explode(',',$item->fang_config)) }}</td>
                         <td>
                             {!! $item->editBtn('admin.fang.edit') !!}
                             {!! $item->delBtn('admin.fang.destroy') !!}

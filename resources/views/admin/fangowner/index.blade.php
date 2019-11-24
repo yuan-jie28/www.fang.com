@@ -1,4 +1,5 @@
 @extends('admin.public.main')
+
 @section('css')
     <style>
         #juzhong td {
@@ -7,6 +8,7 @@
         }
     </style>
 @endsection
+
 @section('cnt')
     <nav class="breadcrumb">
         <i class="Hui-iconfont">&#xe67f;</i> 首页
