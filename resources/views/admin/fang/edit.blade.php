@@ -3,7 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ staticAdminWeb() }}lib/webuploader/0.1.5/webuploader.css">
     <style>
-        #imglist img{
+        #imglist img {
             width: 150px;
             padding-left: 5px;
         }
@@ -22,19 +22,20 @@
     @include('admin.public.msg')
 
     <article class="page-container">
-        <form class="form form-horizontal" id="form-fang-add" action="{{ route('admin.fang.update') }}" method="post">
+        <form class="form form-horizontal" id="form-fang-add" action="{{ route('admin.fang.update',$fang) }}"
+              method="post">
             @csrf
             @method('PUT')
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="fang_name">
+                    <input type="text" class="input-text" name="fang_name" value="{{ $fang->fang_name }}">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小区名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" name="fang_xiaoqu">
+                    <input type="text" class="input-text" name="fang_xiaoqu" value="{{ $fang->fang_xiaoqu }}">
                 </div>
             </div>
             <div class="row cl">
@@ -44,23 +45,28 @@
                         <select name="fang_province" class="select" onchange="changeCity(this,'fang_city')">
                             <option value="0">==请选择省份==</option>
                             @foreach($pData as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" @if($fang->fang_province == $item->id) selected @endif>{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 170px;">
                         <select name="fang_city" id="fang_city" class="select"
                                 onchange="changeCity(this,'fang_region')">
-                            <option value="0">==选择市==</option>
+                            @foreach($cData as $item)
+                                <option value="{{ $item->id }}" @if($fang->fang_city == $item->id) selected @endif>{{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 170px;">
                         <select name="fang_region" id="fang_region" class="select">
-                            <option value="0">==选择区==</option>
+                            @foreach($rData as $item)
+                                <option value="{{ $item->id }}" @if($fang->fang_region == $item->id) selected @endif>{{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 430px;">
-                        <input type="text" class="select" placeholder="房源详细地址" name="fang_addr">
+                        <input type="text" class="select" placeholder="房源详细地址" name="fang_addr" value="{{ $fang->fang_addr }}">
+                        <input type="hidden" name="fang_addr2" value="{{ $fang->fang_addr }}">
                     </span>
                 </div>
             </div>
@@ -70,7 +76,7 @@
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_direction" class="select">
                             @foreach($attrData['fang_direction']['sub'] as $item)
-                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                <option value="{{ $item['id'] }}" @if($fang->fang_direction == $item['id']) selected @endif>{{ $item['name'] }}</option>
                             @endforeach
                         </select>
                     </span>
@@ -80,7 +86,8 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源面积：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 150px;">
-                        <input type="text" class="select" placeholder="房源面积" name="fang_build_area">
+                        <input type="text" class="select" placeholder="房源面积" name="fang_build_area"
+                               value="{{ $fang->fang_build_area }}">
                     </span>&nbsp;&nbsp;平方米
                 </div>
             </div>
@@ -88,7 +95,8 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>使用面积：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 150px;">
-                        <input type="text" class="select" placeholder="使用面积" name="fang_using_area">
+                        <input type="text" class="select" placeholder="使用面积" name="fang_using_area"
+                               value="{{ $fang->fang_using_area }}">
                     </span>&nbsp;&nbsp;平方米
                 </div>
             </div>
@@ -96,7 +104,8 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>建筑年代：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 150px;">
-                        <input type="text" class="select" placeholder="建筑年代" name="fang_year">
+                        <input type="text" class="select" placeholder="建筑年代" name="fang_year"
+                               value="{{ $fang->fang_year }}">
                     </span>&nbsp;&nbsp;年
                 </div>
             </div>
@@ -104,7 +113,7 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源租金：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 150px;">
-                        <input type="text" class="select" name="fang_rent">
+                        <input type="text" class="select" name="fang_rent" value="{{ $fang->fang_rent }}">
                     </span>&nbsp;&nbsp;元
                 </div>
             </div>
@@ -112,40 +121,41 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源楼层：</label>
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 150px;">
-                        <input type="text" class="select" placeholder="房源楼层" name="fang_floor">
+                        <input type="text" class="select" placeholder="房源楼层" name="fang_floor"
+                               value="{{ $fang->fang_floor }}">
                     </span>
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_shi" class="select">
                             @foreach($attrData['fang_shi']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_shi == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_ting" class="select">
                             @foreach($attrData['fang_ting']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_ting == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_wei" class="select">
                             @foreach($attrData['fang_wei']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_wei == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_rent_class" class="select">
                             @foreach($attrData['fang_rent_class']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_rent_class == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
                     <span class="select-box" style="width: 150px;">
                         <select name="fang_rent_money" class="select">
                             @foreach($attrData['fang_rent_money']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_rent_money == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -157,8 +167,10 @@
                     @foreach($attrData['fang_config']['sub'] as $item)
                         <div class="check-box">
                             <label>
-                                <input type="checkbox" value="{{$item['id']}}" name="fang_config[]">
-                                {{$item['name']}}
+                                <input type="checkbox" value="{{ $item['id'] }}" name="fang_config[]"
+                                       @if(in_array($item['id'],explode(',',$fang->fang_config))) checked @endif
+                                >
+                                {{ $item['name'] }}
                             </label>
                         </div>
                     @endforeach
@@ -170,7 +182,7 @@
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_area" class="select">
                             @foreach($attrData['fang_area']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_area == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -181,8 +193,8 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_rent_range" class="select">
-                            @foreach($attrData['fang_rent']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                            @foreach($attrData['fang_rent_range']['sub'] as $item)
+                                <option value="{{$item['id']}}" @if($fang->fang_rent_range == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -194,7 +206,7 @@
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_rent_type" class="select">
                             @foreach($attrData['fang_rent_type']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_rent_type == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -205,13 +217,15 @@
                 <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
                         <label>
-                            <input name="fang_status" type="radio" value="0" checked>
+                            <input name="fang_status" type="radio" value="0"
+                                   @if($fang->fang_status == 0) checked @endif>
                             待租
                         </label>
                     </div>
                     <div class="radio-box">
                         <label>
-                            <input name="fang_status" type="radio" value="1">
+                            <input name="fang_status" type="radio" value="1"
+                                   @if($fang->fang_status == 1) checked @endif>
                             已租
                         </label>
                     </div>
@@ -222,13 +236,15 @@
                 <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
                         <label>
-                            <input name="is_recommend" type="radio" value="0" checked>
+                            <input name="is_recommend" type="radio" value="0"
+                                   @if($fang->is_recommend == '0') checked @endif>
                             不推荐
                         </label>
                     </div>
                     <div class="radio-box">
                         <label>
-                            <input name="is_recommend" type="radio" value="1">
+                            <input name="is_recommend" type="radio" value="1"
+                                   @if($fang->is_recommend == '1') checked @endif>
                             推荐
                         </label>
                     </div>
@@ -240,7 +256,7 @@
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_owner" class="select">
                             @foreach($fData as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->id}}" @if($fang->fang_owner == $item['id']) selected @endif>{{$item->name}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -252,7 +268,7 @@
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_group" class="select">
                             @foreach($attrData['fang_group']['sub'] as $item)
-                                <option value="{{$item['id']}}">{{$item['name']}}</option>
+                                <option value="{{$item['id']}}" @if($fang->fang_group == $item['id']) selected @endif>{{$item['name']}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -261,7 +277,7 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源摘要：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <textarea name="fang_desn" class="textarea"></textarea>
+                    <textarea name="fang_desn" class="textarea">{{ $fang->fang_desn }}</textarea>
                 </div>
             </div>
             <div class="row cl">
@@ -269,20 +285,24 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <div class="uploader-thum-container">
                         <div id="filePicker">选择图片</div>
-                        <input type="hidden" name="fang_pic" id="pic">
-                        <div id="imglist"></div>
+                        <input type="hidden" name="fang_pic" id="pic" value="{{ $fang->fang_pic }}">
+                        <div id="imglist">
+                            @foreach($fang->pic as $src)
+                                <img src="{{ $src }}"/>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>房源详情：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <textarea id="fang_body" name="fang_body"></textarea>
+                    <textarea id="fang_body" name="fang_body">{{ $fang->fang_body }}</textarea>
                 </div>
             </div>
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                    <button class="btn btn-primary radius" type="submit">添加新房源</button>
+                    <button class="btn btn-primary radius" type="submit">修改房源</button>
                 </div>
             </div>
         </form>
@@ -299,7 +319,8 @@
     <script type="text/javascript" src="{{ staticAdminWeb() }}lib/webuploader/0.1.5/webuploader.min.js"></script>
     <!-- 表单前端验证插件 jquery validate -->
     <script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/jquery.validate.js"></script>
-    <script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript"
+            src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/validate-methods.js"></script>
     <script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery.validation/1.14.0/messages_zh.js"></script>
 
     <script>
@@ -370,11 +391,11 @@
             // 因为是多图上传，保存到数据表中的图片地址就是一个拼接地址  以#隔开
             let val = $('#pic').val();
             // 拼接成功一个多图片存入数据字段的字符串
-            $('#pic').val(val + '#' +url);
+            $('#pic').val(val + '#' + url);
             // 多图片上传显示
             // 创建一个jquery_dom对象
             let imgobj = $('<img />');
-            imgobj.attr('src',url);
+            imgobj.attr('src', url);
             $('#imglist').append(imgobj);
         });
         // 富文本

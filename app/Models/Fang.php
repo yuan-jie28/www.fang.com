@@ -29,4 +29,12 @@ class Fang extends Base
         $names = Fangattr::whereIn('id',$id)->pluck('name')->toArray();
         return implode(',',$names);
     }
+
+    // 获取器
+    public function getPicAttribute()
+    {
+        $arr = explode('#',$this->attributes['fang_pic']);
+        array_shift($arr);
+        return $arr;
+    }
 }

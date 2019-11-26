@@ -80,6 +80,14 @@ return [
             'root'      => public_path('uploads/fang'),
         ],
 
+        // 上传图片
+        'renting'   => [
+            // 驱动  本地文件
+            'driver'    => 'local',
+            // 上传到服务器的位置
+            'root'      => public_path('uploads/renting'),
+        ],
+
         // 导出房东excel
         'fangownerexcel'   => [
             // 驱动  本地文件

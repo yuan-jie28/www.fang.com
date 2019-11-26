@@ -180,7 +180,7 @@
                 <div class="formControls col-xs-8 col-sm-9">
                     <span class="select-box" style="width: 362px;">
                         <select name="fang_rent_range" class="select">
-                            @foreach($attrData['fang_rent']['sub'] as $item)
+                            @foreach($attrData['fang_rent_range']['sub'] as $item)
                                 <option value="{{$item['id']}}">{{$item['name']}}</option>
                             @endforeach
                         </select>
@@ -281,7 +281,7 @@
             </div>
             <div class="row cl">
                 <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-                    <button class="btn btn-primary radius" type="submit">添加新房源</button>
+                    <button class="btn btn-primary radius" type="submit">添加房源</button>
                 </div>
             </div>
         </form>

@@ -76,12 +76,21 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         Route::get('fangowner/export','FangOwnerController@export')->name('fangowner.export');
         Route::resource('fangowner','FangOwnerController');
 
-        //---------------------------------------------------
+        //-------
+        //-------------------------------------------
         // 城市获取
         Route::get('fang/city','FangController@getCity')->name('fang.city');
         // 房源管理
         Route::resource('fang','FangController');
+
+        // 预约管理
+        Route::resource('notice','NoticeController');
+
+        // 租客列表
+        Route::get('renting/index','RentingController@index')->name('renting.index');
+
+        // 接口管理
+        Route::resource('apiuser','ApiuserController');
+
     });
-
-
 });
