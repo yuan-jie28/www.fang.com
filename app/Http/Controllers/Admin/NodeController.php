@@ -59,27 +59,27 @@ class NodeController extends BaseController
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    // 修改显示
     public function edit($id)
     {
-        //
+        // 获取当前用户信息
+        $data = Node::find($id);
+        return view('admin.node.edit', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    // 修改处理
+    public function update(Request $request, Node $node)
     {
-        //
+        // 表单验证
+        $data = $this->validate($request, [
+            'name' => 'required|unique:nodes,name,' . $node->id,
+            'route_name' => 'required',
+            'is_menu' => 'required|in:0,1',
+        ]);
+        // 修改
+        $node->update($data);
+
+        return redirect(route('admin.node.index'))->with('success', '修改权限成功');
     }
 
     /**

@@ -99,7 +99,7 @@
                     $.post(url, this.frmData).then(ret => {
                         if (ret.status == 0) {
                             // 添加数据成功
-                            layer.msg(ret.msg, {icon: 1, timeout: 1500}, () => {
+                            layer.msg('添加成功', {icon: 1, timeout: 1500}, () => {
                                 location.href = ret.url;
                             })
                         } else {

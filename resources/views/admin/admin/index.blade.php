@@ -105,7 +105,7 @@
         // 此时第一次使用回调函数时，不能使用箭头函数，因为会破坏this的指向，laravel框架已经自动添加了this指向
         $('.deluser').click(function () {
             // 发起请求的地址
-            var url = $(this).attr('data-href');
+            var url = $(this).attr('href');
             // 点击删除按钮，会询问是否删除
             layer.confirm('您真的要删除此用户吗？', {
                 btn: ['确认删除', '再想一下']
@@ -114,7 +114,7 @@
                 $.ajax({
                     url,
                     type: 'delete',
-                    data: {_token}
+                    data: { _token }
                 }).then(ret => {
                     // 把当前点击的行给删除了  js的dom操作
                     $(this).parents('tr').remove();

@@ -13,14 +13,14 @@
         {{-- 错误信息 --}}
         @include('admin.public.msg')
 
-        <form action="{{ route('admin.user.update',['id' => $data->id]) }}" method="post" class="form form-horizontal" id="form-admin-add">
+        <form action="{{ route('admin.user.update',$data) }}" method="post" class="form form-horizontal" id="form-admin-add">
             @csrf
             {{--{{ method_field('PUT') }}--}}
             @method('PUT')
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账号：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <input type="text" class="input-text" value="{{ $data->username }}" id="adminName" name="username">
+                    <input  type="text" class="input-text" value="{{ $data->username }}" id="adminName" name="username">
                 </div>
             </div>
             <div class="row cl">
@@ -33,11 +33,11 @@
                 <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>性别：</label>
                 <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
-                        <input name="sex" type="radio" value="先生" checked>
+                        <input name="sex" type="radio" value="先生" @if($data->sex == '先生') checked @endif>
                         <label for="sex-1">先生</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" value="女士" name="sex">
+                        <input type="radio" value="女士" name="sex" @if($data->sex == '女士') checked @endif>
                         <label for="sex-2">女士</label>
                     </div>
                 </div>

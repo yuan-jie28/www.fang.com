@@ -41,8 +41,9 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        // 阀值 1分钟100次
         'api' => [
-            'throttle:60,1',
+            'throttle:100,1',
             'bindings',
         ],
     ];
@@ -67,6 +68,9 @@ class Kernel extends HttpKernel
 
         // 路由中间件的别名  => 类路径
         'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
+
+        // 接口安全
+        'checkapi' => \App\Http\Middleware\CheckApi::class,
     ];
 
     /**

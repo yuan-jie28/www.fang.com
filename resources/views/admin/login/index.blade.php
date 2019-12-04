@@ -32,17 +32,10 @@
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input class="input-text size-L" type="text" placeholder="验证码"
+                    <input class="input-text size-L" name="captcha" type="text" placeholder="验证码"
                            onblur="if(this.value==''){this.value='验证码:'}"
                            onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                    <img src=""> <a id="kanbuq" href="javascript:;">看不清，换一张</a></div>
-            </div>
-            <div class="row cl">
-                <div class="formControls col-xs-8 col-xs-offset-3">
-                    <label for="online">
-                        <input type="checkbox" name="online" id="online" value="">
-                        使我保持登录状态</label>
-                </div>
+                    <img id="code" src="{{ captcha_src() }}"> <a href="#" onclick="changeimg(this)">看不清，换一张</a> </div>
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
@@ -62,5 +55,19 @@
 <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
 <script type="text/javascript" src="{{ staticAdminWeb() }}lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ staticAdminWeb() }}static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="http://php-acad.28sjw.com/Statics/Assets/js/jquery.min-3.2.1.js"></script>
+<script>
+    $(function(){
+       // 给 图片 绑定点击事件
+        var url = $('img').attr('src');
+        $('img').click(function(){
+            $(this).attr('src',url + '&_a=' + Math.random());
+        });
+    });
+    function changeimg(){
+        var url = $('#code').attr('src');
+        $('#code').attr('src',url + '&_a=' + Math.random());
+    }
+</script>
 </body>
 </html>

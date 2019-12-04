@@ -12,9 +12,13 @@
         "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
+        "jaeger/querylist": "^4.1",
+        "jaeger/querylist-curl-multi": "^4.0",
+        "jaeger/querylist-ext-multi": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "mews/captcha": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

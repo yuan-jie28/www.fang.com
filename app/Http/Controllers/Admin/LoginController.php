@@ -22,8 +22,11 @@ class LoginController extends Controller
         $data = $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
+            'captcha'  => 'required|captcha'
         ]);
-
+        //dump($data);
+        //die;
+        unset($data['captcha']);
         // auth登录
         //$bool = auth()->guard('web')->attempt($data);
         // 简写 因为默认为web  如果不是默认的则一定要写guard指定

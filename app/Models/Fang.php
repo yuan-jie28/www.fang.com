@@ -37,4 +37,21 @@ class Fang extends Base
         array_shift($arr);
         return $arr;
     }
+
+    // 获取器  把图片地址转为绝对地址
+    public function getFangPicAttribute()
+    {
+        $arr = explode('#',$this->attributes['fang_pic']);
+        // 去除数据中的第一个元素
+        array_shift($arr);
+        return array_map(function ($item){
+            return self::$host . '/' . ltrim($item,'/');
+        },$arr);
+    }
+
+    // 获取器
+    public function getFangPicsAttribute()
+    {
+        return $this->attributes['fang_pic'];
+    }
 }

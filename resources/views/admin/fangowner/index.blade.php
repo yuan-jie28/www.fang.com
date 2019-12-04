@@ -111,6 +111,37 @@
                 }
             });
             return false;
-        })
+        });
+
+        // 删除文章
+        // 事件委托
+        $('.table-sort').on('click', '.deluser', function () {
+            // 请求地址
+            let url = $(this).attr('href');
+            layer.confirm('您真的要删除此用户吗？', {
+                btn: ['确认删除', '再想一下']
+            }, () => {
+                // 使用fetch来实现异步ajax  默认返回promise
+                fetch(url, {
+                    // 指定请求的类型
+                    method: 'delete',
+                    // 指定header
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        // json字符串传递数据，需要此头信息
+                        'content-type': 'application/json'
+                    },
+                    // 数据
+                    body: JSON.stringify({name: 1})
+                }).then(res => {
+                    return res.json();
+                }).then(ret => {
+                    layer.msg('删除成功', {icon: 1, time: 1000}, () => {
+                        $(this).parents('tr').remove();
+                    })
+                });
+            });
+            return false;
+        });
     </script>
 @endsection

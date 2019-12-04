@@ -25,9 +25,6 @@
 
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                <a class="btn btn-danger radius" onclick="deleteAll()">
-                    <i class="Hui-iconfont">&#xe6e2;</i> 批量删除
-                </a>
                 <a href="{{ route('admin.article.create') }}" class="btn btn-primary radius">
                     <i class="Hui-iconfont">&#xe600;</i> 添加文章
                 </a>

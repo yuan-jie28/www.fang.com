@@ -52,13 +52,16 @@ class NoticeController extends BaseController
     // 展示
     public function show(Notice $notice)
     {
-        //
+
     }
 
     // 修改显示
-    public function edit(Notice $notice)
+    public function edit(Request $request, Notice $notice)
     {
-        //
+        if ($request->ajax()){
+            return $notice;
+        }
+        return view('admin.notice.edit',compact('notice'));
     }
 
     // 修改处理
@@ -70,6 +73,7 @@ class NoticeController extends BaseController
     // 删除
     public function destroy(Notice $notice)
     {
-        //
+        $notice->delete();
+        return ['status' => 0, 'msg' => '删除成功'];
     }
 }

@@ -99,11 +99,9 @@ class AdminController extends BaseController
             'password' => 'nullable|confirmed',
             'sex' => 'in:先生,女士'
         ]);
-
         if (!$data['password']) {
             unset($data['password']);
         }
-
         // 修改
         Admin::where('id', $id)->update($data);
         return redirect(route('admin.user.index'))->with('success', '修改用户【' . $data['truename'] . '】成功');
@@ -112,7 +110,7 @@ class AdminController extends BaseController
     // 删除用户
     public function destroy(int $id)
     {
-        $res = Admin::destroy($id);
+        Admin::destroy($id);
         return ['status' => 0, 'msg' => '删除成功'];
     }
 

@@ -109,7 +109,10 @@
             // 不压缩image，默认如果是jpeg，文件上传前会压缩一下再上传
             resize: false,
             // 表单传额外值     csrf验证是所用
-            formData: {_token: "{{ csrf_token() }}"},
+            formData: {
+                _token: "{{ csrf_token() }}",
+                node:"articles"
+            },
             // 上传表单名称
             fileVal: 'file'
         });

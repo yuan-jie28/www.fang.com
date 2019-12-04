@@ -6,8 +6,8 @@ namespace App\Models\Traits;
 trait Btn {
 
     private function checkAuth(string $routeName) {
-        # 在中间件中得到当前角色有持有的权限列表
-        $auths = request()->auths;
+        # 在中间件中得到当前角色有持有的权限列表     ?? [] 解决前后端共用异常问题
+        $auths = request()->auths ?? [];
         // 权限判断
         if (!in_array($routeName, $auths) && request()->username != 'admin') {
             return false;

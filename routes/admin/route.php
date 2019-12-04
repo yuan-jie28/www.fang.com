@@ -5,6 +5,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::get('login', 'LoginController@index')->name('login');
     // 后台登录处理
     Route::post('login', 'LoginController@login')->name('login');
+
+    // es操作路由
+    // 创建索引
+    Route::get('esinitindex','EsController@initIndex')->name('initIndex');
     //------------------------------------------------
     // 这是路由中间件的第3种方法，在路由分组中统一绑定一个中间件
     Route::group(['middleware' => ['checkadmin']], function () {
@@ -35,7 +39,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
         // 修改用户显示  修改时一定要有参数，才能针对指定用户来修改
         Route::get('user/edit/{id}','AdminController@edit')->name('user.edit');
         // 修改用户处理
-        Route::put('user/edit/{id}','AdminController@update')->name('user.update');
+        Route::put('user/update/{id}','AdminController@update')->name('user.update');
 
         // 删除用户
         Route::delete('user/destroy/{id}','AdminController@destroy')->name('user.destroy');

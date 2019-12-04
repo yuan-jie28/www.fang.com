@@ -23,6 +23,15 @@ class Fangattr extends Base {
         return $this->editBtn('admin.fangattr.edit') .' '. $this->delBtn('admin.fangattr.destroy');
     }
 
+    // 获取修改icon字段的输出
+    public function getIconAttribute()
+    {
+        if(stristr($this->attributes['icon'],'http')){
+            return $this->attributes['icon'];
+        }
+        return self::$host . '/' . ltrim($this->attributes['icon'],'/');
+    }
+
     // 这是在修改器中修改的   还有在模型观察者
     // 在添加数据和修改数据之前--------   只有在模型中调用create方法和update方法才会触发它
 //    public function setFieldNameAttribute()

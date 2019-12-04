@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 
         // 生成后台用户数据
-        //$this->call(AdminSeeder::class);
+        $this->call(AdminSeeder::class);
 
         // $this->call(CateSeeder::class);
 
         // 文章
-        $this->call(ArticleSeeder::class);
+//        $this->call(ArticleSeeder::class);
     }
 }

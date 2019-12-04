@@ -27,7 +27,6 @@ class BaseController extends Controller
         // 参2   在config中filesystems.php文件中配置的节点名称
         // 返回上传成功的相对路径
         $url = $file->store('', $nodeName);
-
         return ['status' => 0, 'url' => '/uploads/' . $nodeName . '/' . $url];
     }
 }

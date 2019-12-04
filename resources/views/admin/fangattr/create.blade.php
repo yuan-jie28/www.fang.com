@@ -25,7 +25,7 @@
                 <div class="formControls col-xs-8 col-sm-9"><span class="select-box">
                        <select name="pid" id="pid" class="select">
                            @foreach($data as $id=>$name)
-                               <option value="{{ $id }}">{{ $name }}</option>
+                               <option value="{{ $id }}" @if($id == 0) selected @endif>{{ $name }}</option>
                            @endforeach
                        </select>
                     </span>

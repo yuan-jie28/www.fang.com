@@ -45,6 +45,7 @@ class FangOwnerController extends BaseController
         // 得到图片展示
         $pics = $fangowner->pic;
         $picList = explode('#', $pics);
+//        dump($picList);exit;
         if (count($picList) <= 1) {
             return ['status' => 1, 'mag' => '没有图片', 'data' => []];
         }
@@ -67,37 +68,24 @@ class FangOwnerController extends BaseController
         dump($obj);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\FangOwner $fangOwner
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(FangOwner $fangOwner)
+    // 修改显示
+    public function edit(FangOwner $fangowner)
     {
-        //
+        return view('admin.fangowner.edit', compact( 'fangowner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\FangOwner $fangOwner
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, FangOwner $fangOwner)
+    // 修改处理
+    public function update(FangOwnerRequest $request, FangOwner $fangowner)
     {
-        //
+        $data = $request->except('_token', '_method', 'file');
+        $fangowner->update($data);
+        return redirect(route('admin.fangowner.index'))->with('success', '修改成功');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\FangOwner $fangOwner
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(FangOwner $fangOwner)
+    // 删除
+    public function destroy(FangOwner $fangowner)
     {
-        //
+        $fangowner->delete();
+        return ['status' => 0, 'msg' => '删除成功'];
     }
 }

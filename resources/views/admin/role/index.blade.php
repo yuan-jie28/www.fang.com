@@ -77,7 +77,7 @@
         // 此时第一次使用回调函数时，不能使用箭头函数，因为会破坏this的指向，laravel框架已经自动添加了this指向
         $('.deluser').click(function () {
             // 发起请求的地址
-            var url = $(this).attr('data-href');
+            var url = $(this).attr('href');
             // 点击删除按钮，会询问是否删除
             layer.confirm('您真的要删除此用户吗？', {
                 btn: ['确认删除', '再想一下']
@@ -103,56 +103,5 @@
             // jquery中取消默认行为
             return false;
         });
-
-        // 全选删除
-        function deleteAll() {
-            // 选择选中的复选框
-            var inputs = $('input[name="ids[]"]:checked');
-            // 用户id
-            var ids = [];
-            inputs.map((key, item) => {
-                ids.push($(item).val());
-            });
-            $.ajax({
-                url: '{{ route('admin.user.delall') }}',
-                type: 'delete',
-                data: {
-                    _token,
-                    ids
-                }
-            }).then(ret => {
-                inputs.map((key, item) => {
-                    $(item).parents('tr').remove();
-                });
-            });
-        }
-
-        // 恢复用户
-        // 0 由激活到禁用
-        // 1 由禁用到激活
-        function changeUser(status, id, obj) {
-            if (status == 0) {
-                // 就是软删除
-                $.ajax({
-                    url: '{{ route('admin.user.delall') }}',
-                    type: 'delete',
-                    data: {
-                        _token,
-                        ids: [id]
-                    }
-                }).then(ret => {
-                    $(obj).removeClass('label-success').addClass('label-warning').html('禁用');
-                })
-            } else {
-                // 由禁用到激活
-                // 就是软删除
-                $.ajax({
-                    url: '{{ route('admin.user.restore') }}',
-                    data: {id}
-                }).then(ret => {
-                    $(obj).removeClass('label-warning').addClass('label-success').html('激活');
-                })
-            }
-        }
     </script>
 @endsection

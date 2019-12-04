@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin;
 use App\Models\Node;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -70,5 +71,12 @@ class RoleController extends BaseController
         $role->nodes()->sync($request->get('node_ids'));
 
         return redirect(route('admin.role.index'))->with('success','修改角色成功');
+    }
+
+    // 删除用户
+    public function destroy(int $id)
+    {
+        Role::destroy($id);
+        return ['status' => 0, 'msg' => '删除成功'];
     }
 }

@@ -50,6 +50,10 @@ class FangController extends BaseController
         return redirect(route('admin.fang.index'));
     }
 
+    public function show()
+    {
+
+    }
     // 修改显示
     public function edit(Fang $fang)
     {
@@ -72,16 +76,14 @@ class FangController extends BaseController
     // 修改处理
     public function update(FangRequest $request, Fang $fang)
     {
-//        dd(11111);
-        // dump($request->all());exit;
-
-        $a=$fang->update($request->except(['_token','file','_method','fang_addr2']));
+        $fang->update($request->except(['_token','file','_method','fang_addr2']));
         return redirect(route('admin.fang.index'));
     }
 
     // 删除
     public function destroy(Fang $fang)
     {
-        //
+        $fang->delete();
+        return ['status' => 0, 'msg' => '删除成功'];
     }
 }
